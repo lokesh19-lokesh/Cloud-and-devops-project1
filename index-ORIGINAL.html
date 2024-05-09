@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>To the Power of Math!</title>
+    <!-- Styling for the client UI -->
+    <style>
+    body {
+        background: url('https://img.freepik.com/free-photo/snowy-mountain-peak-starry-galaxy-majesty-generative-ai_188544-9650.jpg') center center fixed; /* Add your image URL here */
+        background-size: cover;
+        margin: 0;
+        padding: 0;
+        font-family: system-ui;
+        color: #FFFFFF; /* Set text color to white */
+    }
+    h1 {
+        color: #FFD700; /* Gold color for the heading */
+        margin-left: 20px;
+    }
+    label {
+        color: #2ecc71; /* Green color for labels */
+        font-size: 20px;
+        margin-left: 20px;
+        margin-top: 20px;
+    }
+    button {
+        background-color: #e74c3c; /* Red color for the button */
+        border-color: #e74c3c;
+        color: #FFFFFF;
+        font-size: 20px;
+        font-weight: bold;
+        margin-left: 30px;
+        margin-top: 20px;
+        width: 140px;
+        transition: background-color 0.3s ease; /* Smooth transition for background color change */
+    }
+    button:hover {
+        background-color: #c0392b; /* Darker red color on hover */
+    }
+    input {
+        color: #ecf0f1; /* Light gray color for input text */
+        font-size: 20px;
+        margin-left: 10px;
+        margin-top: 20px;
+        width: 100px;
+        background-color: #dcec8d; /* Dark gray color for input background */
+        border: 1px solid #d7e45f; /* Border color for input */
+        padding: 5px; /* Add padding for input */
+    }
+    </style>
+    <script>
+        // callAPI function that takes the base and exponent numbers as parameters
+        var callAPI = (base, exponent) => {
+            // instantiate a headers object
+            var myHeaders = new Headers();
+            // add content type header to object
+            myHeaders.append("Content-Type", "application/json");
+            // using built in JSON utility package turn object to string and store in a variable
+            var raw = JSON.stringify({ "base": base, "exponent": exponent });
+            // create a JSON object with parameters for API call and store in a variable
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            // make API call with parameters and use promises to get response
+            fetch("https://rhh115i1pj.execute-api.us-east-1.amazonaws.com/dev", requestOptions)
+            .then(response => response.text())
+            .then(result => alert(JSON.parse(result).body))
+            .catch(error => console.log('error', error));
+        }
+    </script>
+</head>
+<body>
+    <h1>TO THE POWER OF MATH!</h1>
+    <form>
+        <label>Base number:</label>
+        <input type="text" id="base">
+        <label>...to the power of:</label>
+        <input type="text" id="exponent">
+        <!-- set button onClick method to call function we defined passing input values as parameters -->
+        <button type="button" onclick="callAPI(document.getElementById('base').value,document.getElementById('exponent').value)">CALCULATE</button>
+    </form>
+</body>
+</html>
